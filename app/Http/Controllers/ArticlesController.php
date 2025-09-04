@@ -8,9 +8,6 @@ use App\Http\Requests\ArticleSearchRequest;
 use App\Http\Requests\ArticleStoreRequest;
 use App\Http\Requests\ArticleUpdateRequest;
 use App\Models\Articles;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-
 
 class ArticlesController extends Controller
 {
@@ -25,11 +22,10 @@ class ArticlesController extends Controller
         $page = $request->input('page', 1);
 
         $articles = Articles::with('category')
-            ->orderBy($request->input('sort_by', 'created_at') , $request->input('sort_order', 'desc'))
+            ->orderBy($request->input('sort_by', 'created_at'), $request->input('sort_order', 'desc'))
             ->paginate($perPage, ['*'], 'page', $page);
 
-        return response()->json([
-            'data' => $articles->items(),
+        return response()->json(['data' => $articles->items(),
             'pagination' => [
                 'current_page' => $articles->currentPage(),
                 'per_page' => $articles->perPage(),
@@ -51,7 +47,6 @@ class ArticlesController extends Controller
             $article = Articles::create($request->validated());
 
             return response()->json(['message' => 'ok'], 200, [], JSON_UNESCAPED_UNICODE);
-
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'message' => 'Ошибка валидации',
@@ -93,7 +88,6 @@ class ArticlesController extends Controller
             $article = Articles::where('id', $request->route('id'))->update($data);
 
             return response()->json(['message' => 'ok'], 200, [], JSON_UNESCAPED_UNICODE);
-
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'message' => 'Ошибка валидации',
@@ -117,9 +111,7 @@ class ArticlesController extends Controller
     public function search(ArticleSearchRequest $request)
     {
         $request->validated();
-
-        $data = Articles::where('title', 'like', '%'.$request->input('title').'%')->get();
-
+        $data = Articles::where('title', 'like', '%' . $request->input('title') . '%')->get();
         return response()->json($data, 200, [], JSON_UNESCAPED_UNICODE);
     }
 }

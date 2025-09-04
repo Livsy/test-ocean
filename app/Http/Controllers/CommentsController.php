@@ -14,7 +14,6 @@ class CommentsController extends Controller
             $article = Comments::create($request->validated());
 
             return response()->json(['message' => 'ok'], 200, [], JSON_UNESCAPED_UNICODE);
-
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'message' => 'Ошибка валидации',
