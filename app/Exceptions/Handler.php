@@ -46,6 +46,4 @@ class Handler extends ExceptionHandler
             'hint' => 'Используйте токен авторизации в заголовке Authorization: Bearer <token>'
         ], 401);
     }
-
-
 }

@@ -18,5 +18,4 @@ class ArticlesCategories extends Model
     {
         return $this->hasMany(Comments::class, 'category_id', 'id');
     }
-
 }
